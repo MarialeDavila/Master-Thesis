@@ -1,4 +1,4 @@
-function []=Test_SetParameters(idVideo)
+function Test_SetParameters(idVideo)
 
 %dataset_path='/../../dataset/moseg_dataset/';
 dataset_path='/share/storage/vision/mariale/dataset/moseg_dataset/';
@@ -10,9 +10,9 @@ NameFolders=NameFolders(3:end); % Delete '.' and '..'
 NameVideo=NameFolders{idVideo};
 
 % Parameters to evaluate
-AlphaValues=0.1:0.1:1;
-BetaValues=0.1:0.1:1;
-OmegaValues=0.1:0.1:2;
+AlphaValues=0.5;
+BetaValues=0.7;
+OmegaValues=0.7;
 NumAlphaValues=numel(AlphaValues);
 NumBetaValues=numel(BetaValues);
 NumOmegaValues=numel(OmegaValues);
