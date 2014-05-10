@@ -29,6 +29,7 @@ libs_PATH='./../libs/';
 addpath(genpath(libs_PATH));
 % Run VLFEAT
 vlfeat_PATH=[libs_PATH,'vlfeat-0.9.16/'];
+rmpath(genpath(vlfeat_PATH));
 run(cat(2,vlfeat_PATH,'toolbox/vl_setup'))
 
 % path video frames
