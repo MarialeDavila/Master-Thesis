@@ -29,8 +29,8 @@ libs_PATH='./../libs/';
 addpath(genpath(libs_PATH));
 
 % path video frames
-VideoPath=['./../../dataset/moseg_dataset/', NameVideo, '/'];
-% VideoPath=['/share/storage/vision/mariale/dataset/moseg_dataset/', NameVideo, '/'];
+% VideoPath=['./../../dataset/moseg_dataset/', NameVideo, '/'];
+VideoPath=['/share/storage/vision/mariale/dataset/moseg_dataset/', NameVideo, '/'];
 
 % Initial Parameters 
 % FlagFigures        - Display graphics with results of tracking (logical)
