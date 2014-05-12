@@ -23,14 +23,8 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 
 %% Initialization
 
-% path libraries
-libs_PATH='./../libs/';
-% add libraries paths
-addpath(genpath(libs_PATH));
-% Run VLFEAT
-vlfeat_PATH=[libs_PATH,'vlfeat-0.9.16/'];
-rmpath(genpath(vlfeat_PATH));
-run(cat(2,vlfeat_PATH,'toolbox/vl_setup'))
+% Add libraries path
+Startup
 
 % path video frames
 % VideoPath=['./../../dataset/moseg_dataset/', NameVideo, '/'];
