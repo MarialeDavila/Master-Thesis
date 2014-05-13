@@ -24,7 +24,7 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 %% Initialization
 
 % Add libraries path
-Startup
+AddLibrariesPath
 
 % path video frames
 % VideoPath=['./../../dataset/moseg_dataset/', NameVideo, '/'];

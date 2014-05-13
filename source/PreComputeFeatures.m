@@ -2,7 +2,7 @@
 % Save results on files in format .mat
 function [] = PreComputeFeatures(idVideo)
 % add libraries paths
-Startup
+AddLibrariesPath
 
 actual_path=pwd;
 %dataset_path='./../../dataset/moseg_dataset/';

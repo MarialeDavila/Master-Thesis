@@ -10,6 +10,7 @@ for i=1:NumSegments
     end
 end
 
+%ideoObject=cat(4,VideoObject,Image_out);
 writeVideo(VideoObject,Image_out);
 % currentFrame.cdata=uint8(Image_out);
 % currentFrame.colormap=[];
