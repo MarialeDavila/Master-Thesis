@@ -1,4 +1,4 @@
-
+function AddLibrariesPath()
 % Add libraries path
 libs_PATH='./../libs/';
 % add libraries paths
