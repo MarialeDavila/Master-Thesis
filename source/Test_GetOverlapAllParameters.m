@@ -1,7 +1,6 @@
-function Test_SetParameters(idVideo)
+function Test_GetOverlapAllParameters(idVideo)
 
-%dataset_path='/../../dataset/moseg_dataset/';
-dataset_path='/share/storage/vision/mariale/dataset/moseg_dataset/';
+dataset_path='./../../dataset/moseg_dataset/';
 list=dir(dataset_path);
 id_folders=[list.isdir];
 NameFolders={list(id_folders).name};

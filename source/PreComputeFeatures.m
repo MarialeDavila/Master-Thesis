@@ -2,11 +2,9 @@
 % Save results on files in format .mat
 function [] = PreComputeFeatures(idVideo)
 % add libraries paths
-AddLibrariesPath
+AddLibrariesPath();
 
-actual_path=pwd;
-%dataset_path='./../../dataset/moseg_dataset/';
-dataset_path='/share/storage/vision/mariale/dataset/moseg_dataset/';
+dataset_path='./../../dataset/moseg_dataset/';
 list=dir(dataset_path);
 id_folders=[list.isdir];
 name_folders={list(id_folders).name};
