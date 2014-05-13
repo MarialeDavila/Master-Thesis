@@ -19,12 +19,14 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 % References:
 % - "Dynamic Objectness for Adaptive Tracking"
 %   Stalder, S., Grabner, H., & Van Gool, L. ACCV 2012
+% - "Class Segmentation and Object Localization with Superpixel Neighborhoods"
+%   Brian Fulkerson, Andrea Vedaldi, Stefano Soatto. ICCV 2009
 % % 
 
 %% Initialization
 
 % Add libraries path
-AddLibrariesPath
+AddLibrariesPath();
 
 % path video frames
 % VideoPath=['./../../dataset/moseg_dataset/', NameVideo, '/'];
@@ -38,20 +40,21 @@ FlagFigures=0;
 %                    - 'MeanShift', 'Graph-Based' or 'GANC'
 MethodClustering='MeanShift';
 
+% video
+SaveName_Video=['./../results/output/output_',NameVideo,'_a:',num2str(Params.alpha),'_b:',num2str(Params.beta),'_w:',num2str(Params.omega),'.avi'];
+VideoObject = VideoWriter(SaveName_Video);
+open(VideoObject);
 
+%% Initial Interes Points
 % Get video frames and extract features per image
 data = GetVideoFrames(VideoPath);
 MaskGT = GetGroundtruth(VideoPath);
 features = GetFeaturesPerFrame(data,NameVideo);
 
-% First video frame
-I_color=data.Image{1};
-I = rgb2gray(I_color);
-% Ground truth mask of the first frame
-InitialGT=MaskGT{1,1};
-
 % Detect inital interest points
 % Initializate set of Object-Scene-Unseen points
+I = data.ImageGray{1};
+InitialGT=MaskGT{1,1};
 points=InitializatePoints(I,InitialGT,features,FlagFigures);
 
 % Create model SIFT to every object point
@@ -61,20 +64,9 @@ NumFrames=numel(data.Image);
 OutputMask=cell(1,NumFrames);
 OutputMask{1,1}=InitialGT;
 PreviousMask=InitialGT;
-I2=I; Image2=I_color;
-
-% video
-SaveName_Video=['./../results/output/output_',NameVideo,'_a:',num2str(Params.alpha),'_b:',num2str(Params.beta),'_w:',num2str(Params.omega),'.avi'];
-VideoObject = VideoWriter(SaveName_Video);
-open(VideoObject);
 
 % ticid = ticStatus('tracking');
-for idFrame=2:NumFrames
-    %% Get new frames
-    Image1=Image2;
-    I1 = I2;
-    Image2 = data.Image{idFrame};  % Get new frame
-    I2 = rgb2gray(Image2);
+for idFrame=2:4; %NumFrames
     %% Propagation
     % Track all local image features in the image, Object-Scene-Unseen
     [points] = PropagatePoints(points,data,features,idFrame,FlagFigures);
@@ -89,6 +81,7 @@ for idFrame=2:NumFrames
     %% Visualize points
     if FlagFigures
         figure(205);
+        I1=data.ImageGray{idFrame-1};
         PlotPointsAndContour(I1, points, PreviousMask)
     end
     
@@ -96,21 +89,24 @@ for idFrame=2:NumFrames
     groups=ClusteringPoints(points,features,idFrame,MethodClustering);
     % Visualize groups of points
     if FlagFigures
+        I2 =  data.ImageGray{idFrame};
         points_alive=points.position(~points.type.dead,:);
         visualize_clustering(I2,groups,points_alive,MethodClustering);
     end
     
     % Get possible object regions - differents scale, aspect ratio, position, shape
-    % Compute dynamic objectness score and target score
+    % Compute target score and appearance score
+    % Graph-Cut minimization to label segments fg/bg
     [ActualMask, model,VideoObject]=ComputeSegmentsFeatures(PreviousMask,data,features,points,model,groups,idFrame,FlagFigures,Params,VideoObject);
     % Update object model
     % update involves changing the object and scene points
+    I2 =  data.ImageGray{idFrame};
     [points, model]=UpdatePointsAndModel(ActualMask,points, model, I2);
     
     %% Visualize points updated
     if FlagFigures
         figure(210); 
-        PlotPointsAndContour(Image2, points, ActualMask)
+        PlotPointsAndContour(data.Image{idFrame}, points, ActualMask)
     end
     
     OutputMask{1,idFrame}=ActualMask;
