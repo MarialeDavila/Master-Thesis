@@ -1,4 +1,4 @@
-function visualize_graph(pairwise,edges_costs,labels,img_out,NumSegments,class)
+function visualize_graph(pairwise,labels,img_out,NumSegments,class)
 % Visualize the graph in the image segmented, its show the links between
 % nodes or segments
 
@@ -17,7 +17,7 @@ for i=1:NumSegments
     cY(1,i)=idy(id);
 end
 % find links between segments neighbors
-[point_initial point_end]=find(pairwise);
+[point_initial point_end WeigthEdges]=find(pairwise);
 linksXin=cX(point_initial);
 linksYin=cY(point_initial);
 linksXend=cX(point_end);
@@ -27,7 +27,7 @@ linksY=[linksYin; linksYend];
 PointX=mean(linksX);
 PointY=mean(linksY);
 
-
+% Find indices of edges that belong to previous ground truth
 id=find(class==1);
 [idx dummy]=find(pairwise);
 ind=zeros(1,numel(idx));
@@ -45,10 +45,10 @@ hold on;
 plot(cY,cX,'wo','MarkerSize', 6,'MarkerFaceColor',[1 1 1])
 line(linksY,linksX,'Color',[1 1 1])
 
-for i=1:numel(edges_costs)
+for i=1:numel(WeigthEdges)
     if ind(i)==1
         % text
-        text(PointY(i),PointX(i),num2str(edges_costs(i)), ...
+        text(PointY(i),PointX(i),num2str(WeigthEdges(i)), ...
             'HorizontalAlignment','center','BackgroundColor',[1 1 0] )
     end        
 end

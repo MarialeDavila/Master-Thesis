@@ -1,19 +1,16 @@
 function [ImageSegOut VideoObject] = visualize_output_GCM(labels,labels_out,Image,NumSegments,FlagFigures,VideoObject)
 % Visualize output GCM - labels in the image segmented
 
-ImageSegOut=zeros(size(labels));
+IdSegmentsGt=find(labels_out);
+ImageSegOut=ismember(labels,IdSegmentsGt);
+ImageSegOut=double(ImageSegOut);
 Image_out=Image;
-for i=1:NumSegments
-    ImageSegOut(labels==i)=labels_out(i);
-    for j=1:3
-        Image_out(:,:,j)=ImageSegOut.*double(Image(:,:,j));
-    end
+for j=1:3
+    Image_out(:,:,j)=ImageSegOut.*double(Image(:,:,j));
 end
 
-%ideoObject=cat(4,VideoObject,Image_out);
-writeVideo(VideoObject,Image_out);
-% currentFrame.cdata=uint8(Image_out);
-% currentFrame.colormap=[];
+writeVideo(VideoObject,ImageSegOut);
+% writeVideo(VideoObject,Image_out);
 
 if FlagFigures
     figure(40)

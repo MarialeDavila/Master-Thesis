@@ -65,7 +65,7 @@ OutputMask{1,1}=InitialGT;
 PreviousMask=InitialGT;
 
 % ticid = ticStatus('tracking');
-for idFrame=2:4; %NumFrames
+for idFrame=2:NumFrames
     %% Propagation
     % Track all local image features in the image, Object-Scene-Unseen
     [points] = PropagatePoints(points,data,features,idFrame,FlagFigures);

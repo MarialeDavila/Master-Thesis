@@ -31,7 +31,7 @@ idSegmentsFg_previous(segment_fg)=1;
 [UnaryTerm model]=ComputeUnaryTerm(data,labels_previous,labels,idSegmentsFg_previous,color_histogram_new, HOOF_new, params, model, points, groups, FlagFigures);
 
 % Compute Pairwise Term
-[PairwiseTerm, edges_costs] = compute_pairwise_term(color_histogram_new, HOOF_new,labels, params);
+PairwiseTerm = compute_pairwise_term(color_histogram_new, HOOF_new,labels, params);
 
 % Label Cost
 % Value fixed for the labels of each adjacent node in the graph
@@ -47,7 +47,7 @@ Class(idSegmentsFg)=1;
 
 % Visualize Graph edges on the image segmented
 if FlagFigures;
-    visualize_graph(PairwiseTerm,edges_costs,labels,img_out,NumSegments,Class)
+    visualize_graph(PairwiseTerm,labels,img_out,NumSegments,Class)
 end
 
 %% Optimization with CRF
