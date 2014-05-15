@@ -1,4 +1,4 @@
-function [points, model]=UpdatePointsAndModel(ActualMask,points, model, I2,features,idFrame)
+function [points, model]=UpdatePointsAndModel(ActualMask,points, model,features,idFrame)
 
 % update_points_contour
 points_alive=points.position(points.type.dead~=1,:);
