@@ -13,8 +13,8 @@ threshold=45000;
 
 %%
 % Descriptors of Unknown points
-new_points=features.points{idFrame};
-[dummy idUnseenPoints]=ismember(unknown,new_points,'rows');
+Allpoints=features.points{idFrame};
+[dummy idUnseenPoints]=ismember(unknown,Allpoints,'rows');
 
 SiftAllPoints=features.sift{idFrame};
 model_unknow =SiftAllPoints(idUnseenPoints);

@@ -1,4 +1,4 @@
-function [points, model]=UpdatePointsAndModel(ActualMask,points, model,features,idFrame)
+function [points, model]=UpdatePointsAndModel(ActualMask,points, model,data,features,idFrame)
 
 % update_points_contour
 points_alive=points.position(points.type.dead~=1,:);
@@ -17,8 +17,18 @@ if any(id_points_inside_and_no_object)
     % compute descriptors to points inside region and point type No object
     PointsInsideAndNoObject=points_alive(id_points_inside_and_no_object,:);
     SiftAllPoints=features.sift{idFrame};
-    model_sift =SiftAllPoints(PointsInsideAndNoObject);
-    
+    AllPoints=features.points{idFrame};
+    [PointsWithSift idPointsInsideAndNoObject]=ismember(PointsInsideAndNoObject,AllPoints,'rows');
+    if any(PointsWithSift==0)
+        ImageGray=data.ImageGray{idFrame};
+        modelSift_new=ComputeSIFT(ImageGray,PointsInsideAndNoObject(~PointsWithSift,:));
+        modelSift_old=SiftAllPoints(idPointsInsideAndNoObject(PointsWithSift));
+        model_sift(~PointsWithSift)=modelSift_new;
+        model_sift(PointsWithSift)=modelSift_old;
+    else
+        model_sift =SiftAllPoints(idPointsInsideAndNoObject);
+    end
+   
     id=find(id_points_inside_and_no_object==1);
     k=1;
     for i=1:size(id,1)
