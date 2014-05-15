@@ -100,8 +100,7 @@ for idFrame=2:NumFrames
     [ActualMask, model,VideoObject]=ComputeSegmentsFeatures(PreviousMask,data,features,points,model,groups,idFrame,FlagFigures,Params,VideoObject);
     % Update object model
     % update involves changing the object and scene points
-    I2 =  data.ImageGray{idFrame};
-    [points, model]=UpdatePointsAndModel(ActualMask,points, model, I2);
+    [points, model]=UpdatePointsAndModel(ActualMask,points, model,features,idFrame);
     
     %% Visualize points updated
     if FlagFigures
