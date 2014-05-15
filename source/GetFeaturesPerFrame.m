@@ -1,7 +1,8 @@
 function features = GetFeaturesPerFrame(data, NameVideo)
 
 % Load features file if exist else compute features
-FeaturesFile=['./../data/features/','features_',NameVideo,'.mat'];
+NameDataset='moseg_dataset';
+FeaturesFile=['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'];
 
 if exist(FeaturesFile,'file')==2   % if exist file .mat
     load(FeaturesFile)
@@ -54,4 +55,4 @@ else
     
 end
 % Save features computed
-save(['./../data/features/','features_',NameVideo,'.mat'],'features','-v7.3')
+save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features','-v7.3')
