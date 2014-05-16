@@ -14,17 +14,17 @@ OverlapFileName=[savepath,'OutputOverlap_', NameVideo, '.mat'];
 if exist(OverlapFileName,'file')==2   % if exist file .mat
     load(OverlapFileName)
 else
-    NumAlphaValues=3;
-    NumBetaValues=3;
-    NumOmegaValues=5;
+    NumAlphaValues=4;
+    NumBetaValues=4;
+    NumOmegaValues=4;
     Overlap=cell(NumAlphaValues,NumBetaValues,NumOmegaValues);
     IdFramesWithGT=cell(NumAlphaValues,NumBetaValues,NumOmegaValues);
 end
 
 % Create params structure
-AlphaValues=linspace(0,1,3);
-BetaValues=linspace(0,1,3);
-OmegaValues=linspace(0,2,5);
+AlphaValues=[0.25, 0.5, 0.75, 1];
+BetaValues=[0.25, 0.5, 0.75, 1];
+OmegaValues=[0.5, 1, 1.5, 2];
 params.alpha=AlphaValues(IdAlpha);
 params.beta=BetaValues(IdBeta);
 params.omega=OmegaValues(IdOmega);
