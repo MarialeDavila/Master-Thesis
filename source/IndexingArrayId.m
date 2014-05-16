@@ -1,8 +1,10 @@
-function params=IndexingArrayId(ArrayId)
-NumAlphaValues=10;
-NumBetaValues=10;
-NumOmegaValues=20;
-[IdAlpha,IdBeta,IdOmega]=ind2sub([NumAlphaValues,NumBetaValues,NumOmegaValues],ArrayId);
-params.alpha=IdAlpha;
-params.beta=IdBeta;
-params.omega=IdOmega;
+function IndexingArrayId(ArrayId)
+NumAlphaValues=3;
+NumBetaValues=3;
+NumOmegaValues=5;
+NumVideos=26;
+sizeAllValues=[NumAlphaValues,NumBetaValues,NumOmegaValues,NumVideos];
+[IdAlpha,IdBeta,IdOmega,idVideo]=ind2sub(sizeAllValues,ArrayId);
+
+% Call function to execute tracking and evaluate the overlap
+Test_GetOverlapAllParameters_MultipleIdx(idVideo,IdAlpha,IdBeta,IdOmega)
