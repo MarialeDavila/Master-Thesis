@@ -1,4 +1,4 @@
-function Test_GetOverlapAllParameters_MultipleIdx(idVideo,IdAlpha,IdBeta,IdOmega)
+function Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo)
 % Initializate
 dataset_path='./../../dataset/moseg_dataset/';
 list=dir(dataset_path);
@@ -59,4 +59,4 @@ end
 % Save
 Overlap{IdAlpha,IdBeta,IdOmega}=OverlapPerVideo;
 IdFramesWithGT{IdAlpha,IdBeta,IdOmega}=IdFramesGT;
-save(savename,'Overlap','IdFramesWithGT','-v7.3');
+save(OverlapFileName,'Overlap','IdFramesWithGT','-v7.3');

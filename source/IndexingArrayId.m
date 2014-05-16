@@ -7,4 +7,4 @@ sizeAllValues=[NumAlphaValues,NumBetaValues,NumOmegaValues,NumVideos];
 [IdAlpha,IdBeta,IdOmega,idVideo]=ind2sub(sizeAllValues,ArrayId);
 
 % Call function to execute tracking and evaluate the overlap
-Test_GetOverlapAllParameters_MultipleIdx(idVideo,IdAlpha,IdBeta,IdOmega)
+Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo);
