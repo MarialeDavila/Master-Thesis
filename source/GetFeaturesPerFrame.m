@@ -15,6 +15,8 @@ if exist(FeaturesFile,'file')==2   % if exist file .mat
             SegmentationLabels = segmentation(Image,SegmentationMethod);
             features.Segmentation.(SegmentationMethod){idFrame}=double(SegmentationLabels);
         end
+        % Save features computed
+        save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features');
     end
 else
     % Compute Features Per fame
@@ -52,7 +54,7 @@ else
         ImagePrevious=Image;
         TimeFrame=toc; disp(['Frame ' num2str(idFrame) ' ... ' num2str(TimeFrame) ' seconds'])
     end
-    
+    % Save features computed
+    save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features');
 end
-% Save features computed
-save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features','-v7.3')
+
