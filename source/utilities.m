@@ -111,21 +111,13 @@ if FlagFigures
 end
 
 %% Renames files
-list_dir=dir;
+list_dir=dir('/home/mariale/Documents/codes/dataset/synthetic_videos/Video1/');
 id=true(1,numel(list_dir));
 id(1:2)=false;
 list_name={list_dir(id).name};
 N=numel(list_name);
 for i=1:N
-    if i<10
-        name=['00', num2str(i), '.jpg'];
-    else
-        if i<100
-            name=['0', num2str(i), '.jpg'];
-        else
-            name=[num2str(i), '.jpg'];
-        end
-    end
+    name=[sprintf('%03d',i) '.jpg'];
     system(['mv ', list_name{i}, ' ', name]);
 end
 %% Centroids
