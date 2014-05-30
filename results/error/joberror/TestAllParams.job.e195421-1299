@@ -1,0 +1,22 @@
+{Error using *
+Out of memory. Type HELP MEMORY for your options.
+
+Error in pdist2>distEucSq (line 130)
+D = bsxfun(@plus,XX,YY)-2*X*Yt;
+
+Error in pdist2 (line 69)
+    D = distEucSq( X, Y );
+
+Error in ClusteringPoints (line 21)
+matrix_motion=sqrt(pdist2(OFdx(ind_pts),OFdx(ind_pts),'sqeuclidean')+pdist2(OFdy(ind_pts),OFdy(ind_pts),'sqeuclidean'));
+
+Error in TrackingArticulatedObject (line 89)
+    groups=ClusteringPoints(points,features,idFrame,MethodClustering);
+
+Error in Test_GetOverlapAllParameters_MultipleIdx (line 20)
+Mask=TrackingArticulatedObject(NameVideo,params);
+
+Error in IndexingArrayId (line 10)
+Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo);
+} 
+

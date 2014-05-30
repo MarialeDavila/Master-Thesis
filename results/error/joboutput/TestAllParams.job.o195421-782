@@ -1,0 +1,18 @@
+compute-0-3.local
+Fri May 23 05:48:26 COT 2014
+Greetings from job 782
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2013 The MathWorks, Inc.
+                    R2013b (8.2.0.701) 64-bit (glnxa64)
+                              August 13, 2013
+
+Encountered unexpected end-of-file (line 0) while loading toolbox cache.
+Error occurred loading: /home/mariale/.matlab/R2013b/toolbox_cache-8.2.0-893787078-glnxa64.xml
+Cache file ignored.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+Job done
+Fri May 23 08:22:11 COT 2014

@@ -1,3 +1,5 @@
 # Ignored files
 *.mat
 *.avi
+*.job.e*
+*.job.o*

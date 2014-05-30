@@ -1,0 +1,9 @@
+{Subscript indices must either be real positive integers or logicals.
+
+Error in Test_GetOverlapAllParameters_MultipleIdx (line 40)
+    NumPixelsIntersection=sum(sum(Mask{id}.*GT{m}));
+
+Error in IndexingArrayId (line 10)
+Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo);
+} 
+
