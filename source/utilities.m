@@ -111,14 +111,15 @@ if FlagFigures
 end
 
 %% Renames files
-list_dir=dir('/home/mariale/Documents/codes/dataset/synthetic_videos/Video1/');
-id=true(1,numel(list_dir));
-id(1:2)=false;
-list_name={list_dir(id).name};
+FilesPath='/home/mariale/Documents/codes/dataset/moseg_dataset/tennis/';
+list_dir=dir([FilesPath,'/*.jpg']);
+% id=true(1,numel(list_dir));
+% id(1:2)=false;
+list_name={list_dir.name};
 N=numel(list_name);
 for i=1:N
-    name=[sprintf('%03d',i) '.jpg'];
-    system(['mv ', list_name{i}, ' ', name]);
+    name=['tennis' sprintf('%03d',i) '.jpg'];
+    system(['mv ', FilesPath, list_name{i}, ' ', FilesPath, name]);
 end
 %% Centroids
 edges=(pairwise_matrix);
@@ -362,3 +363,54 @@ end
 % 
 % model.movement_fg=[model.movement_fg; HOOF_new(labels_out,:)];
 % model.movement_bg=[model.movement_bg; HOOF_new(~labels_out,:)];
+
+%% Review error in cluster jobs
+% load output file and create unique data file
+ErrorPath='./../results/error/joberror/';
+list=dir(ErrorPath);
+NameFiles={list(3:end).name};
+NumFiles=numel(NameFiles);
+Error=cell(NumFiles,1);
+idJob=zeros(NumFiles,1);
+for i=1:NumFiles
+    Name=NameFiles{i};
+    strName=textscan(Name,'%s','Delimiter','-');
+    
+    idJob(i)=str2double(strName{1}{2});
+    idFile=fopen([ErrorPath Name]);
+    Error{i}=fscanf(idFile,'%s');
+    fclose(idFile);
+end
+
+idArrayToRepeat=[];
+for i=1:NumFiles
+    if ~isempty(Error{i}) && ~strcmp(Error{i}(1:21),'Licensecheckoutfailed')        
+        idArrayToRepeat=[idArrayToRepeat, idJob(i)];
+    end
+end
+
+% ---------------------------------------------------------------------
+% load output file and create unique data file
+ErrorPath='./../results/error/joboutput/';
+list=dir(ErrorPath);
+NameFiles={list(3:end).name};
+NumFiles=numel(NameFiles);
+Out=cell(NumFiles,1);
+idJob=zeros(NumFiles,1);
+for i=1:NumFiles
+    Name=NameFiles{i};
+    strName=textscan(Name,'%s','Delimiter','-');
+    
+    idJob(i)=str2double(strName{1}{2});
+    idFile=fopen([ErrorPath Name]);
+    Out{i}=fscanf(idFile,'%s');
+    fclose(idFile);
+end
+
+idArrayBad=[];
+for i=1:NumFiles
+    if ~isempty(Out{i}) %&& ~strcmp(Out{i}(1:21),'Licensecheckoutfailed')        
+        idArrayBad=[idArrayBad, idJob(i)];
+    end
+end
+
