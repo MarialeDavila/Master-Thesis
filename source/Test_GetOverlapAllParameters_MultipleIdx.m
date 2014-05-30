@@ -1,7 +1,7 @@
 function Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo)
 % Initializate
 NameDataset='moseg_dataset';
-dataset_path='./../../dataset/',NameDataset,'/';
+dataset_path=['./../../dataset/',NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 NameFolders={list(id_folders).name};
@@ -34,8 +34,8 @@ for id=2:NumGtFrames % id=1 frame initial, groundtruth selected to track, don't 
 end
 
 % ----- Compute overlap --------
-Overlap=zeros(1,numel(IdFramesGT));
-for m=1:numel(IdFramesGT)
+Overlap=zeros(1,numel(IdFramesWithGT));
+for m=1:numel(IdFramesWithGT)
     id=IdFramesWithGT(m);
     NumPixelsIntersection=sum(sum(Mask{id}.*GT{m}));
     SumMaskGT=Mask{id}+GT{m};
