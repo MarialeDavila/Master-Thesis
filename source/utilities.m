@@ -118,7 +118,7 @@ list_dir=dir([FilesPath,'/*.jpg']);
 list_name={list_dir.name};
 N=numel(list_name);
 for i=1:N
-    name=['tennis' sprintf('%03d',i) '.jpg'];
+    name=['tennis_' sprintf('%03d',i) '.jpg'];
     system(['mv ', FilesPath, list_name{i}, ' ', FilesPath, name]);
 end
 %% Centroids
