@@ -414,3 +414,33 @@ for i=1:NumFiles
     end
 end
 
+%% 
+output_path='../results/experiments/moseg_dataset/GMM/';
+list=dir(output_path);
+NameFiles={list(3:end).name};
+ArrayIdFailed=[];
+for i=1:numel(NameFiles)
+    load([output_path NameFiles{i}])
+    if exist('Overlap','var')==1 && exist('IdFramesWithGT','var')==1 && exist('OutputMetrics','var')==1
+        disp('ok')
+    else
+        ArrayIdFailed=[ArrayIdFailed, i];
+    end
+    clear Overlap IdFramesWithGT OutputMetrics
+end
+
+Id=[]; idbad=[]; idgood=[];
+for i=1:numel(Output)
+    msge=Output{i};
+    if isempty(msge)
+        Id=[Id,i];
+    else
+        if strcmp(msge(1:7),'Jobdone')
+            idgood=[idgood,i];
+        end
+        if strcmp(msge(3:26),'Warning:Matrixissingular')
+            idbad=[idbad,i];
+        end
+    end
+end
+
