@@ -51,7 +51,7 @@ for m=1:numel(IdFramesWithGT)
     Overlap(m)=NumPixelsIntersection./NumPixelsUnion;
 
     Positive=sum(sum(Mask{id}));
-    Negative=NumberPixels-NumberPixelsPositive;
+    Negative=NumberPixels-Positive;
     
     OutputMetrics.TruePositives(m)=NumPixelsIntersection;    
     OutputMetrics.FalsePositives(m)=Positive-OutputMetrics.TruePositives(m);
