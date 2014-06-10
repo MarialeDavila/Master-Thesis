@@ -14,21 +14,21 @@ NumSegments=double(max(max(labels)));  % Number of segments on image
 img_out=VisualizeSegmentation(Image2,labels, FlagFigures);
 
 % Segmentation previous frame
-labels_previous=features.Segmentation.(SegmentationMethod){idFrame-1};
-NumSegmentsGT=max(max(labels_previous)); %number of segments in GT
+labelsPrevious=features.Segmentation.(SegmentationMethod){idFrame-1};
+NumSegmentsGT=max(max(labelsPrevious)); %number of segments in GT
 
 %% CRF parameters
 % Visualize segments overlap with GT more than 50% of his area.
-segment_fg=visualize_segments_overlap_gt(labels_previous,PreviousMask,NumSegmentsGT,FlagFigures);
+segment_fg=visualize_segments_overlap_gt(labelsPrevious,PreviousMask,NumSegmentsGT,FlagFigures);
 % Indicator of every segment in groundtruth => fg=1  bg=0
 idSegmentsFg_previous=false(1,NumSegmentsGT);
 idSegmentsFg_previous(segment_fg)=1;
 
 % Compute Descriptors
-[model color_histogram_new HOOF_new]=ComputeDescriptors(data,labels_previous,labels,idSegmentsFg_previous, model,features,idFrame);
+[model color_histogram_new HOOF_new]=ComputeDescriptors(data,labelsPrevious,labels,idSegmentsFg_previous, model,features,idFrame);
 
 % Compute Unary term
-[UnaryTerm model]=ComputeUnaryTerm(data,labels_previous,labels,idSegmentsFg_previous,color_histogram_new, HOOF_new, params, model, points, groups, FlagFigures);
+[UnaryTerm model]=ComputeUnaryTerm(data,labelsPrevious,labels,idSegmentsFg_previous,color_histogram_new, HOOF_new, params, model, points, groups, idFrame,FlagFigures);
 
 % Compute Pairwise Term
 PairwiseTerm = compute_pairwise_term(color_histogram_new, HOOF_new,labels, params);
@@ -54,5 +54,9 @@ end
 % GCMEX: An efficient graph-cut based energy minimization
 [labels_out E_out Eafter_out] = GCMex(Class, single(UnaryTerm), PairwiseTerm, single(LabelCost),0);
 
+
 % Visualize output GCM - labels in the image segmented
-[ActualMask VideoObject]=visualize_output_GCM(labels,labels_out,Image2,NumSegments,FlagFigures,VideoObject);
+[ActualMask VideoObject]=visualize_output_GCM(labels,labels_out,Image2,FlagFigures,VideoObject);
+
+% %% Output mask without GCmex 
+% ActualMask = GetOutputMaskbyFeatures(UnaryTerm,labels,VideoObject);

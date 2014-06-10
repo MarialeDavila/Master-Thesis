@@ -2,7 +2,7 @@ function IndexingArrayId(ArrayId)
 NumAlphaValues=4;
 NumBetaValues=4;
 NumOmegaValues=4;
-NumVideos=26;
+NumVideos=10;
 sizeAllValues=[NumAlphaValues,NumBetaValues,NumOmegaValues,NumVideos];
 [IdAlpha,IdBeta,IdOmega,idVideo]=ind2sub(sizeAllValues,ArrayId);
 

@@ -1,10 +1,10 @@
-function [AppearanceScore model]=ComputeAppearanceScoreByGMM(Image1,Image2,labels_frame1,labels,id_label_fg, model)
+function [AppearanceScore model]=ComputeAppearanceScoreByGMM(Image1,Image2,labels_frame1,labels,idSegmentsFg_previous, model)
 
 % Parameters - Number of Components
 FgNumStates=5;
 BgNumStates=5;
 % Learn fg and bg model
-[FgData,BgData] = GetDataPerSegments(Image1,labels_frame1,id_label_fg);
+[FgData,BgData] = GetDataPerSegments(Image1,labels_frame1,idSegmentsFg_previous);
 GMMfg = GmmKeySegments(FgData,FgNumStates);
 GMMbg = GmmKeySegments(BgData,BgNumStates);
 

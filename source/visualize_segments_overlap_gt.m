@@ -1,9 +1,9 @@
-function label_segment_fg = visualize_segments_overlap_gt(labels,mask_initial,NumSegments,FlagFigures)
+function label_segment_fg = visualize_segments_overlap_gt(labels,PreviousMask,NumSegments,FlagFigures)
 % Choose segments overlaped with foreground
 segments_label_fg=zeros(size(labels));
 GtSeg_CommonArea=zeros(size(labels));
-idGT=find(mask_initial==1);
-threshold=0.5;
+idGT=find(PreviousMask==1);
+threshold=0.25; % 0.5
 for i=1:NumSegments   % Number of segments in this frame  
     idSegment=find(labels==i);
     id_overlap_segment_gt=ismember(idSegment,idGT);

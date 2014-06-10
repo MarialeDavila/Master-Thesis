@@ -1,4 +1,4 @@
-function [ImageSegOut VideoObject] = visualize_output_GCM(labels,labels_out,Image,NumSegments,FlagFigures,VideoObject)
+function [ImageSegOut VideoObject] = visualize_output_GCM(labels,labels_out,Image,FlagFigures,VideoObject)
 % Visualize output GCM - labels in the image segmented
 
 IdSegmentsGt=find(labels_out);

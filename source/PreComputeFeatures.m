@@ -3,8 +3,8 @@
 function [] = PreComputeFeatures(idVideo)
 % add libraries paths
 AddLibrariesPath();
-
-dataset_path='./../../dataset/moseg_dataset/';
+NameDataset='moseg_dataset';
+dataset_path=['./../../dataset/' NameDataset '/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 name_folders={list(id_folders).name};

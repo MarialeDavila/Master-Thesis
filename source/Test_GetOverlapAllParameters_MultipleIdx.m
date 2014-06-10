@@ -5,7 +5,7 @@ dataset_path=['./../../dataset/',NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 NameFolders={list(id_folders).name};
-NameFolders=NameFolders(3:end); % Delete '.' and '..'
+NameFolders=NameFolders(3:12); % only cars videos
 NameVideo=NameFolders{idVideo};
 
 % Create params structure
@@ -33,18 +33,34 @@ for id=2:NumGtFrames % id=1 frame initial, groundtruth selected to track, don't 
     IdFramesWithGT(id-1)=str2double(strNameGt{1}(2));
 end
 
-% ----- Compute overlap --------
+% ----- Compute overlap and other metrics --------
 Overlap=zeros(1,numel(IdFramesWithGT));
+OutputMetrics=struct();
+% Positives == Foreground
+OutputMetrics.TruePositives=zeros(1,numel(IdFramesWithGT));
+OutputMetrics.FalsePositives=zeros(1,numel(IdFramesWithGT));
+% Negatives == Background
+OutputMetrics.TrueNegatives=zeros(1,numel(IdFramesWithGT));
+OutputMetrics.FalseNegatives=zeros(1,numel(IdFramesWithGT));
+NumberPixels=numel(Mask{1});
 for m=1:numel(IdFramesWithGT)
     id=IdFramesWithGT(m);
     NumPixelsIntersection=sum(sum(Mask{id}.*GT{m}));
     SumMaskGT=Mask{id}+GT{m};
     NumPixelsUnion=sum(sum(SumMaskGT~=0));
     Overlap(m)=NumPixelsIntersection./NumPixelsUnion;
+
+    Positive=sum(sum(Mask{id}));
+    Negative=NumberPixels-NumberPixelsPositive;
+    
+    OutputMetrics.TruePositives(m)=NumPixelsIntersection;    
+    OutputMetrics.FalsePositives(m)=Positive-OutputMetrics.TruePositives(m);
+    OutputMetrics.TrueNegatives(m)=NumberPixels-NumPixelsUnion;
+    OutputMetrics.FalseNegatives(m)=Negative-OutputMetrics.TrueNegatives(m);
 end
 
 % Save Output 
-savepath=['./../results/experiments/',NameDataset,'/SLICsegmentation/'];
+savepath=['./../results/experiments/',NameDataset,'/GMM/'];
 parameters=['_a:',num2str(params.alpha),'_b:',num2str(params.beta),'_w:',num2str(params.omega)];
 OverlapFileName=[savepath,'OutputOverlap_', NameVideo, parameters, '.mat'];
-save(OverlapFileName,'Overlap','IdFramesWithGT');
+save(OverlapFileName,'Overlap','IdFramesWithGT','OutputMetrics');

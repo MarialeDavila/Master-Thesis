@@ -41,7 +41,7 @@ FlagFigures=0;
 MethodClustering='MeanShift';
 
 % video
-SaveName_Video=['./../results/output/output_',NameVideo,'_a:',num2str(Params.alpha),'_b:',num2str(Params.beta),'_w:',num2str(Params.omega),'.avi'];
+SaveName_Video=['./../results/output/GMM/output_',NameVideo,'_a:',num2str(Params.alpha),'_b:',num2str(Params.beta),'_w:',num2str(Params.omega),'.avi'];
 VideoObject = VideoWriter(SaveName_Video);
 open(VideoObject);
 

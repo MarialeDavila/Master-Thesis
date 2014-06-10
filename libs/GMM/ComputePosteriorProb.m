@@ -3,7 +3,7 @@ function [FgPim,BgPim] = ComputePosteriorProb(Data,fg,bg)
 [nbVar,nbData] = size(Data);
 FgPxi=zeros(nbData,fg.numComponents);
 BgPxi=zeros(nbData,bg.numComponents);
-for j=fg.numComponents
+for j=1:fg.numComponents
     %Compute the probability p(x|i)
     FgPxi(:,j) = gaussPDF(Data, fg.mean(:,j), fg.covariance(:,:,j));            
 end
@@ -21,9 +21,11 @@ FgPix = fgPix_tmp ./ repmat(sum([sum(fgPix_tmp,2),sum(bgPix_tmp,2)],2),[1 fg.num
 BgPix = bgPix_tmp ./ repmat(sum([sum(fgPix_tmp,2),sum(bgPix_tmp,2)],2),[1 bg.numComponents]);
 
 % Probability per Component
-[FgPim,Fgcomp] = max(FgPix,[],2);  
+% [FgPim,Fgcomp] = max(FgPix,[],2);  
+FgPim = mean(FgPix,2);  
 FgPim(isnan(FgPim))=0;
 
-[BgPim,Bgcomp] = max(BgPix,[],2); 
+% [BgPim,Bgcomp] = max(BgPix,[],2); 
+BgPim = mean(BgPix,2); 
 BgPim(isnan(BgPim))=0;
 end

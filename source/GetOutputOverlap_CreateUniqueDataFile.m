@@ -1,5 +1,5 @@
 % load output file and create unique data file
-OutputPath='./../results/experiments/moseg_dataset/SLICsegmentation/';
+OutputPath='./../results/experiments/moseg_dataset/GMM/';
 list=dir(OutputPath);
 NameFiles={list(4:end).name};
 NumFiles=numel(NameFiles);
@@ -14,7 +14,9 @@ NumOmegaValues=numel(OmegaValues);
 for i=1:NumFiles
     Name=NameFiles{i};
     strName=textscan(Name,'%s','Delimiter','_:');
-    
+    if strcmp(strName{1},'OverlapGlobal.mat')
+        break
+    end
     NameVideo=strName{1}{2};
     
     alpha=strName{1}{4};

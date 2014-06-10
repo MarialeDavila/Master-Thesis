@@ -13,7 +13,7 @@ for i=1:NumSegments
     B_segment=Image(idx+2*sizeLabels);
     
     SegmentsPixels=cat(3,R_segment,G_segment,B_segment);
-    SegmentsPixels = reshape(SegmentsPixels, [],3);
+    SegmentsPixels = reshape(SegmentsPixels,[],3);
     
     hist_segment=ndHistc(double(SegmentsPixels),0:256/nbins:256, 0:256/nbins:256, 0:256/nbins:256);
     color_hist_segment=reshape(hist_segment(:),1,[]);

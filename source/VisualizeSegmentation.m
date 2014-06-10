@@ -6,9 +6,9 @@ sizeLabels=numel(labels);
 Rsegment=zeros(size(labels));Gsegment=zeros(size(labels));Bsegment=zeros(size(labels));
 for i=1:NumSegments    
     id=find(labels==i);        
-    Rsegment(id)=fix(sum(Image2(id))/numel(id));
-    Gsegment(id)=fix(sum(Image2(id+sizeLabels))/numel(id));
-    Bsegment(id)=fix(sum(Image2(id+2*sizeLabels))/numel(id));
+    Rsegment(id)=round(sum(Image2(id))/numel(id));
+    Gsegment(id)=round(sum(Image2(id+sizeLabels))/numel(id));
+    Bsegment(id)=round(sum(Image2(id+2*sizeLabels))/numel(id));
 end
 
 img_out(:,:,1)=Rsegment; img_out(:,:,2)=Gsegment; img_out(:,:,3)=Bsegment;

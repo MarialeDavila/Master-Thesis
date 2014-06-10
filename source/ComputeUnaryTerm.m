@@ -1,13 +1,13 @@
-function [UnaryTerm model]=ComputeUnaryTerm(data,labelsPrevious,labels,idSegmentsFg_previous, color_histogram_new, HOOF_new, params, model, points, groups, FlagFigures)
+function [UnaryTerm model]=ComputeUnaryTerm(data,labelsPrevious,labels,idSegmentsFg_previous, color_histogram_new, HOOF_new, params, model, points, groups, idFrame, FlagFigures)
 
 % Compute AppearanceScore
-ColorModelByGMM=0;
+ColorModelByGMM=1;
 if ColorModelByGMM
     %Get Data
     Image1=data.Image{idFrame-1};
     Image2=data.Image{idFrame};
     
-    [AppearanceScore model]=ComputeAppearanceScoreByGMM(Image1,Image2,labelsPrevious,labels,idSegmentsFg_previous, model);
+    [AppearanceScore model]=ComputeAppearanceScoreGMM(Image1,Image2,labelsPrevious,labels,idSegmentsFg_previous, model);
 else
     AppearanceScore = ComputeAppearanceScoreByHist(color_histogram_new,model);
 end
@@ -27,5 +27,5 @@ UnaryTerm = (params.alpha)*SegmentScore + (1-params.alpha)*PointScore;
 % Visualize relation data term - labels in the image segmented
 if FlagFigures
     MinDistances=[AppearanceScore; MovementScore];
-    visualize_relation_unary_term(UnaryTerm,SegmentScore,MinDistances,labels)
+    visualize_relation_unary_term(UnaryTerm,SegmentScore,MinDistances,labels);
 end
