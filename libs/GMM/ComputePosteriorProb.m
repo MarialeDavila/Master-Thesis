@@ -22,10 +22,10 @@ BgPix = bgPix_tmp ./ repmat(sum([sum(fgPix_tmp,2),sum(bgPix_tmp,2)],2),[1 bg.num
 
 % Probability per Component
 % [FgPim,Fgcomp] = max(FgPix,[],2);  
-FgPim = mean(FgPix,2);  
+FgPim = sum(FgPix,2);  % mean(FgPix,2)
 FgPim(isnan(FgPim))=0;
 
 % [BgPim,Bgcomp] = max(BgPix,[],2); 
-BgPim = mean(BgPix,2); 
+BgPim = sum(BgPix,2); % mean(BgPix,2); 
 BgPim(isnan(BgPim))=0;
 end

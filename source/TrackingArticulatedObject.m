@@ -12,7 +12,7 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 %
 % OUTPUT:
 % OutputMask         - is locations of cluster centers (cell = 1xnumFrames)
-%                    - mask of contours, 0's and 1's 
+%                    - mask of contours, 0's and 1's
 %
 %
 % Maria Alejandra Davila Salazar April.2014
@@ -21,7 +21,7 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 %   Stalder, S., Grabner, H., & Van Gool, L. ACCV 2012
 % - "Class Segmentation and Object Localization with Superpixel Neighborhoods"
 %   Brian Fulkerson, Andrea Vedaldi, Stefano Soatto. ICCV 2009
-% % 
+% %
 
 %% Initialization
 
@@ -32,7 +32,7 @@ AddLibrariesPath();
 NameDataset='moseg_dataset';
 VideoPath=['./../../dataset/',NameDataset,'/', NameVideo, '/'];
 
-% Initial Parameters 
+% Initial Parameters
 % FlagFigures        - Display graphics with results of tracking (logical)
 %                    - true or false ; 1 or 0
 FlagFigures=0;
@@ -81,8 +81,8 @@ for idFrame=2:NumFrames
     %% Visualize points
     if FlagFigures
         figure(205);
-        I1=data.ImageGray{idFrame-1};
-        PlotPointsAndContour(I1, points, PreviousMask)
+        I2=data.ImageGray{idFrame};
+        PlotPointsAndContour(I2, points, false(size(PreviousMask)))
     end
     
     %% Exploring and Grouping
@@ -104,7 +104,7 @@ for idFrame=2:NumFrames
     
     %% Visualize points updated
     if FlagFigures
-        figure(210); 
+        figure(210);
         PlotPointsAndContour(data.Image{idFrame}, points, ActualMask)
     end
     

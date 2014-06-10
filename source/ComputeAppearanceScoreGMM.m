@@ -33,6 +33,7 @@ if ~isempty(BgData); model.GMMbg=GMMbg; end
 Data = GetMeanValuePerSegments(Image2,labels);
 [FgProb,BgProb] = ComputePosteriorProb(Data,model.GMMfg,model.GMMbg);
 % Get appearance score per segment
-AppearanceScore(1,:)=BgProb;
-AppearanceScore(2,:)=FgProb;
+% It would be a similitud score, the opposite to probability
+AppearanceScore(1,:)=1-BgProb;
+AppearanceScore(2,:)=1-FgProb;
 

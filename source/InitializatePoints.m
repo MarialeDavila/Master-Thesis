@@ -1,6 +1,7 @@
 function [points]=InitializatePoints(I,InitialGT,features,FlagFigures) 
 
 % Detect initial interest point
+% Points are corners detected in a grayscale image
 points.position = features.points{1}; % [X Y]
 
 % Initial Ground Truth 
@@ -16,12 +17,9 @@ points.type.unknown = false(size(points.position,1),1);
 points.type.dead = false(size(points.position,1),1);
 
 if FlagFigures
-    % Visualize object and scene points (Points are corners detected in a grayscale image)
-    figure(200); imshow(I)
-    hold on;
-    plot(points.position(points.type.object>0,1),points.position(points.type.object>0,2),'o','Color', [1 0 0]);
-    plot(points.position(points.type.scene>0,1),points.position(points.type.scene>0,2),'o','Color', [0 0 1]);
-    contour(InitialGT, 'LineColor',[0 0 1])
+    % Visualize object and scene points 
+    figure(200);
+    PlotPointsAndContour(I,points,InitialGT)
     title('Object and Scene points in a grayscale image','FontSize',12)
     legend('Object Points','Scene Points')
     hold off;
