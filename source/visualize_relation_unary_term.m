@@ -60,10 +60,10 @@ title('Unary term related to Movement in foreground model')
 figure(152), clims=[0 1];
 subplot(221),
 imagesc(ImageSeg_DataTerm_wP_bg,clims), axis image
-title('Unary term without penalization in background model')
+title('Unary term of color and movement in background model')
 subplot(222), 
 imagesc(ImageSeg_DataTerm_wP_fg,clims), axis image
-title('Unary term without penalization in foreground model')
+title('Unary term of color and movement in foreground model')
 subplot(223),
 imagesc(ImageSeg_DataTerm_bg,clims), axis image
 title('Unary term overall in background model')
