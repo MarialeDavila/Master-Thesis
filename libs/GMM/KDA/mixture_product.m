@@ -1,5 +1,6 @@
 function [post] = mixture_product(pred, pden)
-% Function modified by Maria Alejandra Davila Salazar
+% Function modified to remove circular shift
+% By Maria Alejandra Davila Salazar
 % April/2014
 pred_num = pred.numComponents;
 pred_prob = pred.weight;
@@ -23,8 +24,8 @@ for i = 1:msr_num,
     m1 = msr_mean(:,i);
     
     % centered at m1(3)
-    r = m1(3);
-    m1(3) = 0;
+%     r = m1(3);
+%     m1(3) = 0;
 
     inv_P1 = msr_P(:,:,i)\I;
     for j = 1:pred_num,
@@ -33,10 +34,10 @@ for i = 1:msr_num,
         m2 = pred_mean(:, j);
         
         % shift by m1(3)
-        m2(3) = mod(m2(3)-r, 360);
-        if m2(3)>180
-            m2(3) = m2(3)-360;
-        end
+%         m2(3) = mod(m2(3)-r, 360);
+%         if m2(3)>180
+%             m2(3) = m2(3)-360;
+%         end
         
         inv_P2 = pred_P(:,:,j)\I;
         inv_P = (inv_P1+inv_P2)\I;
@@ -46,7 +47,7 @@ for i = 1:msr_num,
         psum = psum + pr(idx);
 
         % recover
-        m(3,idx) = m(3,idx)+r;
+%         m(3,idx) = m(3,idx)+r;
     end
 end
 pr = pr / psum;

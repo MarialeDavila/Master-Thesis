@@ -17,17 +17,17 @@ for i=1:n_out,
     cm1 = m_out(:, i);
 
     % align angles w.r.t. cm1
-    tm = m_in;
-    tm(3,:) = mod(m_in(3,:)-cm1(3), 360);
-    idx = find(tm(3,:)>180);
-    tm(3,idx) = tm(3,idx)-360;
-    cm1(3) = 0;
+%     tm = m_in;
+%     tm(3,:) = mod(m_in(3,:)-cm1(3), 360);
+%     idx = find(tm(3,:)>180);
+%     tm(3,idx) = tm(3,idx)-360;
+%     cm1(3) = 0;
 
-%     wt = w_in.*gauss_prob_nd_mp(cm1, m_in, invPv, dim, detP, params);    
-    wt = w_in.*gauss_prob_nd_mp(cm1, tm, invPv, dim, detP, params);    
+    wt = w_in.*gauss_prob_nd_mp(cm1, m_in, invPv, dim, detP, params);    
+%     wt = w_in.*gauss_prob_nd_mp(cm1, tm, invPv, dim, detP, params);    
     for j = 1:num,
-%         cm2 = m_in(:,j);
-        cm2 = tm(:,j);
+        cm2 = m_in(:,j);
+%         cm2 = tm(:,j);
         invcP = invP(:,:,j);
         cmdiff = cm1-cm2;
         tmp = invcP*cmdiff;

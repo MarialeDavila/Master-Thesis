@@ -319,7 +319,7 @@ cz=reshape(repmat(color,64,1),[],1);
 c=[cx,cy,cz];
 c=c/256;
 
-figure, 
+figure,
 scatter3(x,y,z,s,c,'filled'), view(135,35)
 
 %% GMM
@@ -340,16 +340,16 @@ end
 
 %% comments
 % if Nframe==2
-    % image with groundtruth 
-    % Compute descriptors for segments of initial frame
-    [color_histogram_gt, HOOF_gt]=compute_descriptors(Image1,of_dx,of_dy,labels_frame1,NumSegmentsGT);
-    % Merge descriptors to build Color and Movement Models
-    % to Background and Foreground
-    model.color_fg=color_histogram_gt(id_label_fg,:);
-    model.color_bg=color_histogram_gt(~id_label_fg,:);
-    
-    model.movement_fg=HOOF_gt(id_label_fg,:);
-    model.movement_bg=HOOF_gt(~id_label_fg,:);
+% image with groundtruth
+% Compute descriptors for segments of initial frame
+[color_histogram_gt, HOOF_gt]=compute_descriptors(Image1,of_dx,of_dy,labels_frame1,NumSegmentsGT);
+% Merge descriptors to build Color and Movement Models
+% to Background and Foreground
+model.color_fg=color_histogram_gt(id_label_fg,:);
+model.color_bg=color_histogram_gt(~id_label_fg,:);
+
+model.movement_fg=HOOF_gt(id_label_fg,:);
+model.movement_bg=HOOF_gt(~id_label_fg,:);
 % end
 
 %---------------------------------
@@ -360,7 +360,7 @@ end
 % labels_out=logical(labels_out);
 % model.color_fg=[model.color_fg; color_histogram_new(labels_out,:)];
 % model.color_bg=[model.color_bg; color_histogram_new(~labels_out,:)];
-% 
+%
 % model.movement_fg=[model.movement_fg; HOOF_new(labels_out,:)];
 % model.movement_bg=[model.movement_bg; HOOF_new(~labels_out,:)];
 
@@ -382,9 +382,19 @@ for i=1:NumFiles
     fclose(idFile);
 end
 
+Error1=cell(1,1);
+k=1; idError=[];
+for i=1:640
+    if ~isempty(Error{i})
+        Error1{k,1}=Error{i};
+        k=k+1;
+        idError=[idError; idJob(i)];
+    end
+end
+
 idArrayToRepeat=[];
 for i=1:NumFiles
-    if ~isempty(Error{i}) && ~strcmp(Error{i}(1:21),'Licensecheckoutfailed')        
+    if ~isempty(Error{i}) %%&& ~strcmp(Error{i}(1:21),'Licensecheckoutfailed')
         idArrayToRepeat=[idArrayToRepeat, idJob(i)];
     end
 end
@@ -402,6 +412,9 @@ for i=1:NumFiles
     strName=textscan(Name,'%s','Delimiter','-');
     
     idJob(i)=str2double(strName{1}{2});
+    if idJob(i)==412 || idJob(i)==416 || idJob(i)==478  
+        break
+    end
     idFile=fopen([ErrorPath Name]);
     Out{i}=fscanf(idFile,'%s');
     fclose(idFile);
@@ -409,12 +422,27 @@ end
 
 idArrayBad=[];
 for i=1:NumFiles
-    if ~isempty(Out{i}) %&& ~strcmp(Out{i}(1:21),'Licensecheckoutfailed')        
+    if ~isempty(Out{i}) %&& ~strcmp(Out{i}(1:21),'Licensecheckoutfailed')
         idArrayBad=[idArrayBad, idJob(i)];
     end
 end
 
-%% 
+IdEmpty=[]; idbad=[]; idgood=[];
+for i=1:numel(Out)
+    msge=Out{i};
+    if isempty(msge)
+        IdEmpty=[IdEmpty,idJob(i)];
+    else
+        if strcmp(msge(1:7),'Jobdone')
+            idgood=[idgood,idJob(i)];
+        end
+        if strcmp(msge(3:26),'Warning:Matrixissingular')
+            idbad=[idbad,idJob(i)];
+        end
+    end
+end
+
+%%
 output_path='../results/experiments/moseg_dataset/GMM/';
 list=dir(output_path);
 NameFiles={list(3:end).name};
@@ -424,23 +452,7 @@ for i=1:numel(NameFiles)
     if exist('Overlap','var')==1 && exist('IdFramesWithGT','var')==1 && exist('OutputMetrics','var')==1
         disp('ok')
     else
-        ArrayIdFailed=[ArrayIdFailed, i];
+        ArrayIdFailed=[ArrayIdFailed, idJob(i)];
     end
     clear Overlap IdFramesWithGT OutputMetrics
 end
-
-Id=[]; idbad=[]; idgood=[];
-for i=1:numel(Output)
-    msge=Output{i};
-    if isempty(msge)
-        Id=[Id,i];
-    else
-        if strcmp(msge(1:7),'Jobdone')
-            idgood=[idgood,i];
-        end
-        if strcmp(msge(3:26),'Warning:Matrixissingular')
-            idbad=[idbad,i];
-        end
-    end
-end
-
