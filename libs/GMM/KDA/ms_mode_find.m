@@ -12,25 +12,25 @@ th = params.converge;
 
 I = eye(dim);
 
-% rmn = repmat(m_in, dim, 1);
+rmn = repmat(m_in, dim, 1);
 iter = zeros(1, num);
 
 for i=1:num,
     cx = m_in(:,i);
     delta = ones(dim, 1);
 
-    tm = m_in;
-    tm(3,:) = mod(m_in(3,:)-cx(3), 360);
-    idx = find(tm(3,:)>180);
-    tm(3,idx) = tm(3,idx)-360;
-    r = cx(3);
-    cx(3) = 0;
-    rmn = repmat(tm, dim, 1);
+%     tm = m_in;
+%     tm(3,:) = mod(m_in(3,:)-cx(3), 360);
+%     idx = find(tm(3,:)>180);
+%     tm(3,idx) = tm(3,idx)-360;
+%     r = cx(3);
+%     cx(3) = 0;
+%     rmn = repmat(tm, dim, 1);
     while norm(delta) > th,
         iter(i) = iter(i)+1;
         
-%     	probs = gauss_prob_nd_mp(cx, m_in, P_in, dim, detP, params);
-    	probs = gauss_prob_nd_mp(cx, tm, P_in, dim, detP, params);
+    	probs = gauss_prob_nd_mp(cx, m_in, P_in, dim, detP, params);
+%     	probs = gauss_prob_nd_mp(cx, tm, P_in, dim, detP, params);
         wsum = w_in*probs';
 
     	wt = w_in.*probs/wsum;
@@ -44,7 +44,7 @@ for i=1:num,
         cx = cx+delta;
     end
 
-    cx(3) = mod(cx(3)+r, 360);
+%     cx(3) = mod(cx(3)+r, 360);
     m_out(:,i) = cx;
     P_out(:,:,i) = H;
 end

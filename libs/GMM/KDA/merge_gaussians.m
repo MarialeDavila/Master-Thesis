@@ -17,11 +17,24 @@ for i=1:num
     if mask(i) == 1
         dm = sum(abs(repmat(tm(:,i), 1, num)-tm).^2, 1);
         idx = find(dm<th & mask==1);
-        n_out = n_out+1;
-        np = w(idx)/sum(w(idx));
-        m_out(:,n_out) = sum(tm(:,idx).*repmat(np, dim, 1), 2);
-        w_out(n_out) = sum(w(idx));
-        assoc{n_out} = idx;
-        mask(idx) = 0;
+        if ~isempty(idx)
+            n_out = n_out+1;
+            np = w(idx)/sum(w(idx));
+            if isnan(np)
+                np=0;
+            end
+            m_out(:,n_out) = sum(tm(:,idx).*repmat(np, dim, 1), 2);
+            w_out(n_out) = sum(w(idx));
+            assoc{n_out} = idx;
+            mask(idx) = 0;
+        end
     end
+end
+
+if n_out==0
+    n_out=1;
+    np = w/sum(w);
+    m_out = sum(tm.*repmat(np, dim, 1), 2);
+    w_out = sum(w);
+    assoc{1} = 1:num;
 end
