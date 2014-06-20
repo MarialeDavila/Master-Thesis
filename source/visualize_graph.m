@@ -45,11 +45,18 @@ hold on;
 plot(cY,cX,'wo','MarkerSize', 6,'MarkerFaceColor',[1 1 1])
 line(linksY,linksX,'Color',[1 1 1])
 
-for i=1:numel(WeigthEdges)
-    if ind(i)==1
-        % text
-        text(PointY(i),PointX(i),num2str(WeigthEdges(i)), ...
-            'HorizontalAlignment','center','BackgroundColor',[1 1 0] )
-    end        
-end
+% for i=1:numel(WeigthEdges)
+%     if ind(i)==1
+%         % text
+%         %         text(PointY(i),PointX(i),num2str(WeigthEdges(i)), ...
+%         %             'HorizontalAlignment','center','BackgroundColor',[1 1 0] )      
+%         line(linksY(:,i),linksX(:,i),'Color',[1 0 0])
+%     end
+% end
+% 
+% for i=1:NumSegments
+%     if class(i)==1
+%         plot(cY(i),cX(i),'wo','MarkerSize', 6,'MarkerFaceColor',[1 0 0])
+%     end
+% end
 hold off;

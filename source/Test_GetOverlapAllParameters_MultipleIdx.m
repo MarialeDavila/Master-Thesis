@@ -1,6 +1,6 @@
 function Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo)
 % Initializate
-NameDataset='moseg_dataset';
+NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
 dataset_path=['./../../dataset/',NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];

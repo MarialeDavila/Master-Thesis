@@ -1,23 +1,27 @@
 function features = GetFeaturesPerFrame(data, NameVideo)
 
 % Load features file if exist else compute features
-NameDataset='moseg_dataset';
+NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
 FeaturesFile=['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'];
 
 if exist(FeaturesFile,'file')==2   % if exist file .mat
     load(FeaturesFile)
-    % Verify if exist the labels for a different method of segmentation
-    SegmentationMethod ='SLIC';
-    if ~isfield(features.Segmentation,SegmentationMethod)
-        NumberFrames=numel(data.Image);
-        for idFrame=1:NumberFrames
-            Image=data.Image{idFrame};
-            SegmentationLabels = segmentation(Image,SegmentationMethod);
-            features.Segmentation.(SegmentationMethod){idFrame}=double(SegmentationLabels);
-        end
-        % Save features computed
-        save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features');
+    if ~(isfield(features,'points') && isfield(features,'sift') ...
+            && isfield(features,'OpticalFlow') && isfield(features,'Segmentation'))
+        disp(['The Features File: ' FeaturesFile ' is damaged'])
     end
+%     % Verify if exist the labels for a different method of segmentation
+%     SegmentationMethod ='SLIC';
+%     if ~isfield(features.Segmentation,SegmentationMethod)
+%         NumberFrames=numel(data.Image);
+%         for idFrame=1:NumberFrames
+%             Image=data.Image{idFrame};
+%             SegmentationLabels = segmentation(Image,SegmentationMethod);
+%             features.Segmentation.(SegmentationMethod){idFrame}=double(SegmentationLabels);
+%         end
+%         % Save features computed
+%         save(['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'],'features');
+%     end
 else
     % Compute Features Per fame
     NumberFrames=numel(data.Image);

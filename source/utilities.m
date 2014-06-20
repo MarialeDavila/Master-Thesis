@@ -456,3 +456,72 @@ for i=1:numel(NameFiles)
     end
     clear Overlap IdFramesWithGT OutputMetrics
 end
+
+%% Visualizaciones
+
+NumSegments=double(max(max(labels)));  % Number of segments on image
+sizeLabels=numel(labels); 
+Rsegment=zeros(size(labels));Gsegment=zeros(size(labels));Bsegment=zeros(size(labels));
+
+ColorPerSegment=255*uniqueColors(20,90);
+order=randperm(NumSegments);
+for i=1:NumSegments    
+    id=find(labels==i);
+    Rsegment(id)=ColorPerSegment(order(i),1);
+    Gsegment(id)=ColorPerSegment(order(i),2);
+    Bsegment(id)=ColorPerSegment(order(i),3);
+end
+
+img_out(:,:,1)=Rsegment; img_out(:,:,2)=Gsegment; img_out(:,:,3)=Bsegment;
+img_out=uint8(img_out);
+if FlagFigures
+    figure(50000),
+    imshow(img_out);
+end
+
+figure(1500), clims=[0 1];
+subplot(121),
+imagesc(ImageSeg_dist_color_bg,clims); axis image; axis off; colorbar
+title('Unary term related to Color in background model')
+subplot(122), 
+imagesc(ImageSeg_dist_color_fg,clims); axis image; axis off; colorbar
+title('Unary term related to Color in foreground model')
+
+figure,  clims=[0 1];
+subplot(121),
+imagesc(ImageSeg_dist_of_bg,clims); axis image; axis off; colorbar
+title('Unary term related to Movement in background model')
+subplot(122), 
+imagesc(ImageSeg_dist_of_fg,clims); axis image; axis off; colorbar
+title('Unary term related to Movement in foreground model')
+
+figure(152), clims=[0 1];
+subplot(121),
+imagesc(ImageSeg_DataTerm_wP_bg,clims); axis image; axis off; colorbar
+title('Unary term of color and movement in background model')
+subplot(122), 
+imagesc(ImageSeg_DataTerm_wP_fg,clims); axis image; axis off; colorbar
+title('Unary term of color and movement in foreground model')
+
+subplot(121),
+imagesc(ImageSeg_DataTerm_bg,clims); axis image; axis off; colorbar
+title('Unary term overall in background model')
+subplot(122), 
+imagesc(ImageSeg_DataTerm_fg,clims); axis image; axis off; colorbar
+title('Unary term overall in foreground model')
+
+%--
+psbg=2*(data_term_bg-0.5*data_term_wP_bg);
+psfg=2*(data_term_fg-0.5*data_term_wP_fg);
+PS_bg=zeros(size(labels));
+PS_fg=zeros(size(labels));
+for i=1:NumSegments
+    PS_bg(labels==i)=psbg(i);
+    PS_fg(labels==i)=psfg(i);
+end
+subplot(121),
+imagesc(PS_bg,clims); axis image; axis off; colorbar
+title('Unary term related to Points Score in background model')
+subplot(122), 
+imagesc(PS_fg,clims); axis image; axis off; colorbar
+title('Unary term related to Points Score in foreground model')

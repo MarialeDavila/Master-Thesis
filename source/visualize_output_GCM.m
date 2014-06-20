@@ -21,6 +21,6 @@ if FlagFigures
     title('Region of the image labeled like Foreground by the output of GCM')
     figure(42)
     imshow(Image)
-    hold on, contour(ImageSegOut), hold off
+    hold on, contour(ImageSegOut,'LineColor',[1 1 0]), hold off
 end
 
