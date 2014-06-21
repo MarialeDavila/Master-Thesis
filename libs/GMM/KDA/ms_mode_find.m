@@ -32,7 +32,11 @@ for i=1:num,
     	probs = gauss_prob_nd_mp(cx, m_in, P_in, dim, detP, params);
 %     	probs = gauss_prob_nd_mp(cx, tm, P_in, dim, detP, params);
         wsum = w_in*probs';
-
+        if wsum==0                   % Add for fix bug caused by NaN values
+            H=zeros(dim,dim);        % ---
+            delta = zeros(dim, 1);   % ---
+            cx =  zeros(dim, 1);     % ---
+        else
     	wt = w_in.*probs/wsum;
         rwt1 = repmat(wt, dim*dim, 1);
     	rwt2 = rwt1(1:dim, :);
@@ -42,6 +46,7 @@ for i=1:num,
         H = tmp1\I;
         delta = H*tmp2-cx;
         cx = cx+delta;
+        end
     end
 
 %     cx(3) = mod(cx(3)+r, 360);
