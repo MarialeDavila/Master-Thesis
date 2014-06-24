@@ -61,6 +61,6 @@ end
 
 % Save Output 
 savepath=['./../results/experiments/',NameDataset,'/GMM/'];
-parameters=['_a:',num2str(params.alpha),'_b:',num2str(params.beta),'_w:',num2str(params.omega)];
+parameters=['_a_',num2str(params.alpha),'_b_',num2str(params.beta),'_w_',num2str(params.omega)];
 OverlapFileName=[savepath,'OutputOverlap_', NameVideo, parameters, '.mat'];
 save(OverlapFileName,'Overlap','IdFramesWithGT','OutputMetrics');

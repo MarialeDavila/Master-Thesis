@@ -20,8 +20,8 @@ for i=1:num
         if ~isempty(idx)
             n_out = n_out+1;
             np = w(idx)/sum(w(idx));
-            if isnan(np)
-                np=0;
+            if any(isnan(np))
+                np=zeros(1,numel(idx));
             end
             m_out(:,n_out) = sum(tm(:,idx).*repmat(np, dim, 1), 2);
             w_out(n_out) = sum(w(idx));
