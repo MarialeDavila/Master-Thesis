@@ -33,6 +33,10 @@ for i=1:n_out,
         tmp = invcP*cmdiff;
         Hes(:,:,i) = Hes(:,:,i)+wt(j)*(tmp*tmp'-invcP);
     end
+    IdIsNan=isnan(Hes); % edit to avoid bug in eig() function
+    IdIsInf=isinf(Hes); % -----
+    Hes(IdIsNan)=0;     % -----
+    Hes(IdIsInf)=0;     % -----
     D = eig(Hes(:,:,i));
     if any(D>=0)
         pd = [pd i];
