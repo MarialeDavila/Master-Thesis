@@ -1,6 +1,7 @@
 function Test_SetParameters(idVideo)
 
-dataset_path='./../../dataset/moseg_dataset/';
+NameDataset='CarsMoseg'; % 'SegTrack' 'MCCD'
+dataset_path=['./../../dataset/', NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 NameFolders={list(id_folders).name};

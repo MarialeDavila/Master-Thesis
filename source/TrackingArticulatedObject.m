@@ -1,7 +1,9 @@
-function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
+function [OutputMask]=TrackingArticulatedObject(NameDataset,NameVideo,Params)
 % Object Tracking in Video
 %
 % INPUTS:
+% NameDataset        - Name dataset folder (string)
+%                    - 'CarsMoseg', 'SegTrack', 'MCCD'
 % NameVideo          - Name video (string)
 %                    - 'cars1'-'cars10', 'marple1'-'marple13', 'people1',
 %                    - 'people2' or 'tennis'
@@ -29,7 +31,6 @@ function [OutputMask]=TrackingArticulatedObject(NameVideo,Params)
 AddLibrariesPath();
 
 % path video frames
-NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
 VideoPath=['./../../dataset/',NameDataset,'/', NameVideo, '/'];
 
 % Initial Parameters
@@ -41,7 +42,7 @@ FlagFigures=0;
 MethodClustering='MeanShift';
 
 % video
-SaveName_Video=['./../results/output/',NameDataset,'/GMM/output_',NameVideo,'_a_',num2str(Params.alpha),'_b_',num2str(Params.beta),'_w_',num2str(Params.omega),'.avi'];
+SaveName_Video=['./../results/output/',NameDataset,'/GMM/VideoOutput_',NameVideo,'_a_',num2str(Params.alpha),'_b_',num2str(Params.beta),'_w_',num2str(Params.omega),'.avi'];
 VideoObject = VideoWriter(SaveName_Video);
 open(VideoObject);
 

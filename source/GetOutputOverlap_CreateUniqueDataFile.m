@@ -1,12 +1,12 @@
 % load output file and create unique data file
 function [OverlapGlobal,IdFramesGtGlobal,OutputMetricsGlobal] = GetOutputOverlap_CreateUniqueDataFile(NameDataset)
-% NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
+% NameDataset='moseg_dataset'; % 'SegTrack' 'CarsMoseg' 'MCCD'
 OutputPath=['./../results/experiments/',NameDataset,'/GMM/'];
 list=dir(OutputPath);
 NameFiles={list(3:end).name};
 NumFiles=numel(NameFiles);
 
-if strcmp(NameDataset,'moseg_dataset')
+if strcmp(NameDataset,'CarsMoseg')
     AlphaValues=[0.25, 0.5, 0.75, 1];
     BetaValues=[0.25, 0.5, 0.75, 1];
     OmegaValues=[0.5, 1, 1.5, 2];

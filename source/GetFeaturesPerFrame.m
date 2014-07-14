@@ -1,7 +1,7 @@
-function features = GetFeaturesPerFrame(data, NameVideo)
+function features = GetFeaturesPerFrame(data,NameDataset,NameVideo)
 
 % Load features file if exist else compute features
-NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
+% NameDataset => 'SegTrack' 'CarsMoseg' 'MCCD'
 FeaturesFile=['./../data/features/',NameDataset,'/features_',NameVideo,'.mat'];
 
 if exist(FeaturesFile,'file')==2   % if exist file .mat

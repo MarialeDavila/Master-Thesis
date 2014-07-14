@@ -1,11 +1,10 @@
-function Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo)
+function Test_GetOverlapAllParameters_MultipleIdx(IdAlpha,IdBeta,IdOmega,idVideo,NameDataset)
 % Initializate
-NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
 dataset_path=['./../../dataset/',NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 NameFolders={list(id_folders).name};
-NameFolders=NameFolders(3:12); % only cars videos
+NameFolders=NameFolders(3:end);
 NameVideo=NameFolders{idVideo};
 
 % Create params structure
@@ -17,7 +16,7 @@ params.beta=BetaValues(IdBeta);
 params.omega=OmegaValues(IdOmega);
 
 % --------- Execute Tracking Algorithm with specific parameters ------
-Mask=TrackingArticulatedObject(NameVideo,params);
+Mask=TrackingArticulatedObject(NameDataset,NameVideo,params);
 
 % -------- Get GroundTruth files -------------
 % images gt

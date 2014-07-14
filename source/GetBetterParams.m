@@ -2,7 +2,7 @@ function [value_sum,value_avg, params_sum,params_avg,NumPixelsWrong,better_param
 
 VideoNames=fieldnames(OverlapGlobal);
 NumVideos=numel(VideoNames);
-if strcmp(NameDataset,'moseg_dataset')
+if strcmp(NameDataset,'CarsMoseg')
     AlphaValues=[0.25, 0.5, 0.75, 1];
     BetaValues=[0.25, 0.5, 0.75, 1];
     OmegaValues=[0.5, 1, 1.5, 2];

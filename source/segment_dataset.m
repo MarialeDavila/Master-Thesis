@@ -1,7 +1,8 @@
 % Pre-compute features per frame to  moseg-dataset
 % Save results on files in format .mat
 actual_path=pwd;
-dataset_path='../dataset/moseg_dataset/';
+NameDataset='CarsMoseg'; % 'SegTrack', 'MCCD'
+dataset_path=['../dataset/',NameDataset,'/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];
 name_folders={list(id_folders).name};

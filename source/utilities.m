@@ -111,14 +111,15 @@ if FlagFigures
 end
 
 %% Renames files
-FilesPath='/home/mariale/Documents/codes/dataset/moseg_dataset/tennis/';
-list_dir=dir([FilesPath,'/*.jpg']);
+FilesPath='/home/mariale/Documents/codes/codes_others/FastVideoSegment/Data/inputs/MCCD/';
+list_dir=dir([FilesPath,'/*.ppm']);
 % id=true(1,numel(list_dir));
 % id(1:2)=false;
 list_name={list_dir.name};
 N=numel(list_name);
 for i=1:N
-    name=['tennis_' sprintf('%03d',i) '.jpg'];
+    %     name=['video11_' sprintf('%02d',i) '.jpg'];
+    name=[sprintf('%08d',i) '.jpg'];
     system(['mv ', FilesPath, list_name{i}, ' ', FilesPath, name]);
 end
 %% Centroids
@@ -412,7 +413,7 @@ for i=1:NumFiles
     strName=textscan(Name,'%s','Delimiter','-');
     
     idJob(i)=str2double(strName{1}{2});
-    if idJob(i)==412 || idJob(i)==416 || idJob(i)==478  
+    if idJob(i)==412 || idJob(i)==416 || idJob(i)==478
         break
     end
     idFile=fopen([ErrorPath Name]);
@@ -460,12 +461,12 @@ end
 %% Visualizaciones
 
 NumSegments=double(max(max(labels)));  % Number of segments on image
-sizeLabels=numel(labels); 
+sizeLabels=numel(labels);
 Rsegment=zeros(size(labels));Gsegment=zeros(size(labels));Bsegment=zeros(size(labels));
 
 ColorPerSegment=255*uniqueColors(20,90);
 order=randperm(NumSegments);
-for i=1:NumSegments    
+for i=1:NumSegments
     id=find(labels==i);
     Rsegment(id)=ColorPerSegment(order(i),1);
     Gsegment(id)=ColorPerSegment(order(i),2);
@@ -483,7 +484,7 @@ figure(1500), clims=[0 1];
 subplot(121),
 imagesc(ImageSeg_dist_color_bg,clims); axis image; axis off; colorbar
 title('Unary term related to Color in background model')
-subplot(122), 
+subplot(122),
 imagesc(ImageSeg_dist_color_fg,clims); axis image; axis off; colorbar
 title('Unary term related to Color in foreground model')
 
@@ -491,7 +492,7 @@ figure,  clims=[0 1];
 subplot(121),
 imagesc(ImageSeg_dist_of_bg,clims); axis image; axis off; colorbar
 title('Unary term related to Movement in background model')
-subplot(122), 
+subplot(122),
 imagesc(ImageSeg_dist_of_fg,clims); axis image; axis off; colorbar
 title('Unary term related to Movement in foreground model')
 
@@ -499,14 +500,14 @@ figure(152), clims=[0 1];
 subplot(121),
 imagesc(ImageSeg_DataTerm_wP_bg,clims); axis image; axis off; colorbar
 title('Unary term of color and movement in background model')
-subplot(122), 
+subplot(122),
 imagesc(ImageSeg_DataTerm_wP_fg,clims); axis image; axis off; colorbar
 title('Unary term of color and movement in foreground model')
 
 subplot(121),
 imagesc(ImageSeg_DataTerm_bg,clims); axis image; axis off; colorbar
 title('Unary term overall in background model')
-subplot(122), 
+subplot(122),
 imagesc(ImageSeg_DataTerm_fg,clims); axis image; axis off; colorbar
 title('Unary term overall in foreground model')
 
@@ -522,6 +523,6 @@ end
 subplot(121),
 imagesc(PS_bg,clims); axis image; axis off; colorbar
 title('Unary term related to Points Score in background model')
-subplot(122), 
+subplot(122),
 imagesc(PS_fg,clims); axis image; axis off; colorbar
 title('Unary term related to Points Score in foreground model')

@@ -1,9 +1,9 @@
 % Pre-compute features per frame to  moseg-dataset
 % Save results on files in format .mat
-function [] = PreComputeFeatures(idVideo)
+function [] = PreComputeFeatures(NameDataset,idVideo)
 % add libraries paths
 AddLibrariesPath();
-NameDataset='moseg_dataset'; % 'SegTrack' 'moseg_dataset' 'MCCD'
+% NameDataset => 'CarsMoseg' 'SegTrack' 'MCCD'
 dataset_path=['./../../dataset/' NameDataset '/'];
 list=dir(dataset_path);
 id_folders=[list.isdir];

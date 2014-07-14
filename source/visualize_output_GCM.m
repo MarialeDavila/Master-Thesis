@@ -22,5 +22,6 @@ if FlagFigures
     figure(42)
     imshow(Image)
     hold on, contour(ImageSegOut,'LineColor',[1 1 0]), hold off
+    currFrame = getframe;
+    writeVideo(VideoObject,currFrame);
 end
-
